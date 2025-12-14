@@ -1,0 +1,162 @@
+<!-- templates/top_up_balance.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ settings.title }}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: #f0f9f1;
+            color: #1e3a2f;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background: linear-gradient(135deg, #2e8b57, #3cb371);
+            border-radius: 16px 16px 0 0;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(46, 139, 87, 0.3);
+        }
+        .header {
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            color: white;
+        }
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+        .content {
+            background: white;
+            padding: 20px 15px;
+            margin-top: -15px;
+            border-radius: 0 0 16px 16px;
+        }
+        .info-box {
+            background: #f1f8e9;
+            border: 1px solid #c8e6c9;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+        .info-label {
+            font-size: 0.85rem;
+            color: #558b2f;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+        .info-value {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #2e7d32;
+            word-break: break-all;
+        }
+        .card-number {
+            letter-spacing: 2px;
+            font-family: monospace;
+            text-align: center;
+            padding: 8px 0;
+            background: #e8f5e9;
+            border-radius: 6px;
+            margin-top: 6px;
+        }
+        .instructions {
+            background: #f9fbe7;
+            border-left: 3px solid #7cb342;
+            padding: 14px;
+            border-radius: 0 8px 8px 0;
+            margin-top: 15px;
+            line-height: 1.5;
+            color: #333;
+        }
+        .instructions h3 {
+            color: #558b2f;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #2e8b57;
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            justify-content: center;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+            color: #1b5e20;
+        }
+        .telegram-link {
+            color: #2e8b57 !important;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .telegram-link:hover {
+            text-decoration: underline;
+            color: #1b5e20 !important;
+        }
+        @media (max-width: 480px) {
+            .container {
+                max-width: 100%;
+            }
+            .header h1 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌱 {{ settings.title }}</h1>
+        </div>
+        <div class="content">
+
+
+            <div class="info-box">
+                <div class="info-label">{{ settings.card_label }}</div>
+                <div class="info-value">
+                    <div class="card-number">{{ settings.card_number }}</div>
+                    <div style="margin-top: 8px; font-size: 0.85rem; color: #558b2f;">
+                        {{ settings.card_type }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <div class="info-label">{{ settings.admin_label }}</div>
+                <div class="info-value">
+                    <a href="{{ settings.admin_telegram_link }}" target="_blank" class="telegram-link">
+                        {{ settings.admin_telegram }}
+                    </a>
+                </div>
+            </div>
+
+            <div class="instructions">
+                <h3>{{ settings.instruction_title }}</h3>
+                <p>{{ settings.instruction_text|safe }}</p>
+            </div>
+
+            <a href="/?id={{ tg_id }}" class="back-link">← Bosh sahifaga qaytish</a>
+        </div>
+    </div>
+</body>
+</html>

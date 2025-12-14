@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Darslik davrini tanlang</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: #f0f9f1; /* Yengil biologik fon */
+            color: #1e3a2f; /* To'q yashil matn */
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+        .container {
+            width: 100%;
+            max-width: 400px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .header h2 {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #2e8b57; /* To'q yashil sarlavha */
+        }
+        .item {
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9); /* Yengil yashil gradient */
+            padding: 16px;
+            margin: 12px 0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-align: center;
+            font-size: 1.1rem;
+            border: 1px solid #a5d6a7;
+            color: #1e3a2f;
+            font-weight: 600;
+        }
+        .item:hover {
+            background: linear-gradient(135deg, #c8e6c9, #a5d6a7);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(46, 139, 87, 0.2);
+            border-color: #81c784;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #2e8b57;
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .back-link:hover {
+            color: #1b5e20;
+            text-decoration: underline;
+        }
+        @media (max-width: 480px) {
+            .container {
+                max-width: 100%;
+            }
+            .item {
+                padding: 14px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>🧬 Darslik davrini tanlang</h2>
+        </div>
+
+        {% for e in editions %}
+        <div class="item" onclick="location.href='/savollar/edition/{{ e.id }}/?id={{ tg_id }}'">
+            {{ e.name }} ({{ e.start_year }}–{{ e.end_year }})
+        </div>
+        {% empty %}
+        <p style="text-align:center; color:#666; margin-top: 20px;">Davrlar hali qo'shilmagan.</p>
+        {% endfor %}
+
+        <a href="/?id={{ tg_id }}" class="back-link">← Orqaga</a>
+    </div>
+</body>
+</html>

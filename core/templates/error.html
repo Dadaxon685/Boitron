@@ -1,0 +1,113 @@
+<!-- templates/error.html -->
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Xatolik</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: #121212;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+        .header {
+            padding: 24px 20px;
+            text-align: center;
+            background: linear-gradient(135deg, hsl(117, 95%, 53%), #12ea03);
+            color: white;
+        }
+        .header h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.25);
+        }
+        .content {
+            background: #1e1e1e;
+            padding: 24px 20px;
+            text-align: center;
+        }
+        .message {
+            color: #ffcc80;
+            margin: 16px 0;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #22e215, #1fe910);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 14px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 12px rgba(64, 224, 36, 0.35);
+        }
+        .back-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 107, 0, 0.45);
+            text-decoration: none;
+        }
+        .back-link:active {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                max-width: 100%;
+            }
+            .header h2 {
+                font-size: 1.4rem;
+            }
+            .content {
+                padding: 20px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>⚠️ Xatolik yuz berdi</h2>
+        </div>
+        <div class="content">
+            <div class="message">
+                {{ error|default:"Noma'lum xatolik yuz berdi." }}
+            </div>
+            <a href="{% url 'home' %}?id={{ tg_id }}" class="back-link">← Orqaga qaytish</a>
+        </div>
+    </div>
+
+    <script>
+        // Agar WebApp muhitida bo'lmasa (to'g'ridan-to'g'ri brauzerda ochilsa)
+        if (typeof Telegram === 'undefined' || !Telegram.WebApp) {
+            // Hech narsa o'zgartirmaymiz — "Orqaga qaytish" linki ham shunday ishlaydi
+            // Agar kerak bo'lsa, `history.back()` qilish ham mumkin, lekin hozirgi link yetarli
+        }
+    </script>
+</body>
+</html>

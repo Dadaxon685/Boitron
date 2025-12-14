@@ -1,0 +1,181 @@
+<!-- templates/test_result.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test natijasi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: #f0f9f1;
+            color: #1e3a2f;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+        .container {
+            width: 100%;
+            max-width: 400px;
+        }
+        .header {
+            background: linear-gradient(135deg, #2e8b57, #3cb371);
+            padding: 20px;
+            text-align: center;
+            border-radius: 16px 16px 0 0;
+            box-shadow: 0 4px 12px rgba(46, 139, 87, 0.3);
+            color: white;
+        }
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+        .summary {
+            background: white;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid #c8e6c9;
+            font-weight: 600;
+        }
+        .topic-name {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: #558b2f;
+        }
+        .score {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #2e7d32;
+        }
+        .details {
+            background: white;
+            padding: 20px 15px;
+            border-radius: 0 0 16px 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .question-block {
+            padding: 16px;
+            margin-bottom: 16px;
+            border-radius: 12px;
+            border-left: 4px solid #bdbdbd;
+            background: #f5fbf6;
+        }
+        .question-block.correct {
+            border-left-color: #4caf50;
+            background: #f1f8e9;
+        }
+        .question-block.incorrect {
+            border-left-color: #d32f2f;
+            background: #ffebee;
+        }
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 1.05rem;
+            color: #1e3a2f;
+            line-height: 1.4;
+        }
+        .answer-line {
+            margin-top: 6px;
+            font-size: 0.95rem;
+            color: #555;
+        }
+        .user-answer {
+            color: #d32f2f;
+            font-weight: 500;
+        }
+        .correct-answer {
+            color: #2e7d32;
+            font-weight: 500;
+        }
+        .back-btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 12px;
+            margin: 20px auto 0;
+            transition: opacity 0.2s;
+            box-shadow: 0 4px 10px rgba(76, 175, 80, 0.3);
+            font-size: 1.05rem;
+        }
+        .back-btn:hover {
+            opacity: 0.95;
+        }
+        .retry-btn {
+            background: linear-gradient(135deg, #388e3c, #4caf50) !important;
+        }
+        @media (max-width: 480px) {
+            .container {
+                max-width: 100%;
+            }
+            .header h1 {
+                font-size: 1.3rem;
+            }
+            .score {
+                font-size: 1.2rem;
+            }
+            .question-text {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 Test natijasi</h1>
+        </div>
+
+        <div class="summary">
+            <div class="topic-name">{{ topic.name }}</div>
+            <div class="score">{{ correct }} / {{ total }} ({{ percentage }}%)</div>
+        </div>
+
+        <div class="details">
+            {% for res in results %}
+                <div class="question-block {% if res.is_correct %}correct{% else %}incorrect{% endif %}">
+                    <div class="question-text">
+                        {{ forloop.counter }}. {{ res.question.text }}
+                    </div>
+                    {% if res.selected %}
+                        <div class="answer-line">
+                            Sizning javobingiz: <span class="user-answer">{{ res.selected }}</span>
+                        </div>
+                    {% else %}
+                        <div class="answer-line">
+                            Siz javob bermadingiz.
+                        </div>
+                    {% endif %}
+                    {% if not res.is_correct %}
+                        <div class="answer-line">
+                            To'g'ri javob: <span class="correct-answer">{{ res.correct_answer }}</span>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <a href="{% url 'test_questions' topic.id %}?id={{ tg_id }}" class="back-btn retry-btn">
+                ↻ Testni qaytadan ishlash
+            </a>
+
+            <a href="{% url 'home' %}?id={{ tg_id }}" class="back-btn">
+                Bosh sahifaga qaytish
+            </a>
+        </div>
+    </div>
+</body>
+</html>
